@@ -21,7 +21,7 @@ class OnMessage(commands.Cog):
                         if (msg.created_at - mess.created_at).seconds <= 5:
                             count += 1
                 
-                    allow_xp = count < 3
+                    allow_xp = count <= 4
 
                 if allow_xp:
                     
