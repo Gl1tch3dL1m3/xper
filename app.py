@@ -156,7 +156,8 @@ async def addXP(user, server, add_xp, channel=None, send=True, use_boosters=True
         boosters = await exec("SELECT rate FROM boosters WHERE server_id=%s", (server.id, ))
 
         for booster in boosters:
-            add_xp += booster[0]
+            if user.get_role(booster[0]):
+                add_xp += booster[0]
 
     if xp == ():
         await exec("INSERT INTO users VALUES (%s, %s, %s)", (user.id, server.id, add_xp))
