@@ -153,11 +153,11 @@ async def addXP(user, server, add_xp, channel=None, send=True, use_boosters=True
     xp = xp[0][0] if xp != () else ()
 
     if use_boosters:
-        boosters = await exec("SELECT rate FROM boosters WHERE server_id=%s", (server.id, ))
+        boosters = await exec("SELECT item, rate FROM boosters WHERE server_id=%s", (server.id, ))
 
         for booster in boosters:
             if user.get_role(booster[0]):
-                add_xp += booster[0]
+                add_xp += booster[1]
 
     if xp == ():
         await exec("INSERT INTO users VALUES (%s, %s, %s)", (user.id, server.id, add_xp))
