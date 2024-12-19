@@ -168,8 +168,8 @@ async def addXP(user, server, add_xp, channel=None, send=True, use_boosters=True
         msg: str = await exec("SELECT level_up_message FROM servers WHERE server_id=%s", (server.id, ))
         msg = msg[0][0] if msg[0][0] else "Great job, {user}! Now you're level **{level}**!"
         rewards = await exec("SELECT item FROM rewards WHERE server_id=%s AND req_level<=%s", (server.id, XPToLevel(xp+add_xp)))
-        channel = await exec("SELECT level_up_channel FROM servers WHERE server_id=%s", (msg.guild.id, ))
-        channel = server.get_channel(channel[0][0]) if channel != () else channel
+        sel = await exec("SELECT level_up_channel FROM servers WHERE server_id=%s", (server.id, ))
+        channel = server.get_channel(sel[0][0]) if sel != () else channel
 
         if channel and send:
             try:
@@ -179,8 +179,8 @@ async def addXP(user, server, add_xp, channel=None, send=True, use_boosters=True
                            .replace("{xp}", str(xp + add_xp))
                            .replace("{nextlevel}", str(XPToLevel(xp + add_xp) + 1))
                            .replace("{nextlevelxp}", str(XPToLevel(xp + add_xp) * (XPToLevel(xp + add_xp) + 1) * 20)))
-            except:
-                pass
+            except Exception as e:
+                print(e)
             
             # For loop because you can have more roles after reaching a new level
             for reward in rewards:
