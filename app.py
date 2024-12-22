@@ -10,9 +10,6 @@ from time import time
 __NAME__ = "XPer"
 __AUTHOR__ = "@glitchedlime"
 __VERSION__ = "v1.0"
-__BANNED__ = [858390787599499265]
-__SUPPORTID__ = 999221246459904000
-__OWNERS__ = [1217343439855812710]
 
 bot = discord.Bot()
 uptime = time()
